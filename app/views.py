@@ -31,7 +31,7 @@ def refresh_data():
         random.shuffle(rand_index)
         exp_data.reindex(rand_index)
     exp_data['delay'] = [int(3600000*random.random()) for i in xrange(len(exp_data))]
-    print exp_data
+    logging.info(exp_data)
     #data_file = tempfile.NamedTemporaryFile(suffix='.csv', dir='./app/static', delete=False)
     #data_file.name = './app/static/data.csv'
     #exp_data.to_csv(data_file.name)
