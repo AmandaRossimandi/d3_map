@@ -38,8 +38,7 @@ def refresh_data():
 
 @app.route('/')
 def index():
-    logging.info("RELOAD: {}".format(datetime.now().strftime('%Y/%m/%d/
-        %H-%M-%S')))
+    logging.info("RELOAD: {}".format(datetime.now().strftime('%Y/%m/%d/ %H-%M-%S')))
     filename = refresh_data()
     logging.info('Rendering')
     return render_template('map.html', filename=filename)
