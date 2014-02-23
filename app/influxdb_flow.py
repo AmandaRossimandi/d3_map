@@ -9,7 +9,7 @@ import logging
 
 from influxdb import InfluxDBClient
 
-INFLUX_LOGIN = base64.b64decode(os.environ.get('GA_INFLUX_LOGIN'))
+INFLUX_LOGIN = base64.b64decode(os.environ.get('INFLUX_LOGIN'))
 INFLUX_LOGIN = json.loads(INFLUX_LOGIN)
 
 def save_to_influxdb(client, df, table):
