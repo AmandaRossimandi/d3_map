@@ -8,15 +8,16 @@ import pandas as pd
 import influxdb_flow as idb
 from random import shuffle
 import logging
+logging.basicConfig(level=logging.DEBUG)
 
 def refresh_data():
-    print 'GETTING DATA'
+    logging.info('GETTING DATA')
     client = idb.influx_init()
     logging.info('Query influx')
     data = idb.query_influx(client, 'select latitude, longitude, pageviews \
     from aggregated_user_data where time > now() - 2h;')
-    print data
-    print 'EXPANDING DATA'
+    logging.info(data.head())
+    logging.info('EXPANDING DATA')
     exp_data = pd.DataFrame(columns=['latitude', 'longitude'])
     if len(data) > 0:
         for i in range(len(data)):
@@ -37,10 +38,9 @@ def refresh_data():
 
 @app.route('/')
 def index():
-    print "RELOAD: {}".format(datetime.now().strftime('%Y/%m/%d/ %H-%M-%S'))
+    logging.info("RELOAD: {}".format(datetime.now().strftime('%Y/%m/%d/
+        %H-%M-%S')))
     filename = refresh_data()
     logging.info('Rendering')
-    print filename
-    print 'RENDERING'
     return render_template('map.html', filename=filename)
 
