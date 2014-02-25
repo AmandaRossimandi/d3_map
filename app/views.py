@@ -16,7 +16,7 @@ def refresh_data():
     logging.info('Query influx')
     data = idb.query_influx(client, 'select latitude, longitude, pageviews \
     from aggregated_user_data where time > now() - 2h;')
-    logging.info(data)
+    logging.info(data.pageviews.sum())
     exp_data = pd.DataFrame(columns=['latitude', 'longitude'])
     if len(data) > 0:
         logging.info('EXPANDING DATA')
@@ -31,7 +31,7 @@ def refresh_data():
         random.shuffle(rand_index)
         exp_data.reindex(rand_index)
     exp_data['delay'] = [int(3600000*random.random()) for i in xrange(len(exp_data))]
-    logging.info(exp_data)
+    logging.info(len(exp_data))
     #data_file = tempfile.NamedTemporaryFile(suffix='.csv', dir='./app/static', delete=False)
     #data_file.name = './app/static/data.csv'
     #exp_data.to_csv(data_file.name)
@@ -45,6 +45,8 @@ def index():
     #filename = refresh_data()
     refresh_data()
     filename= './app/static/data.csv'
+    df = pd.read_csv(filename)
+    logging.info(df)
     logging.info('Rendering')
     return render_template('map.html', filename=filename)
 
