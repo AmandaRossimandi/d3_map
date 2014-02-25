@@ -16,7 +16,7 @@ def refresh_data():
     logging.info('Query influx')
     data = idb.query_influx(client, 'select latitude, longitude, pageviews \
     from aggregated_user_data where time > now() - 2h;')
-    logging.info('DATA:\n' + str(data.head()))
+    logging.info(data)
     exp_data = pd.DataFrame(columns=['latitude', 'longitude'])
     if len(data) > 0:
         logging.info('EXPANDING DATA')
