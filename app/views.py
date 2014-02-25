@@ -37,7 +37,7 @@ def refresh_data():
     #exp_data.to_csv(data_file.name)
     #data_file.flush()
     #return data_file.name
-    exp_data.to_csv('./app/static/data.csv')
+    exp_data.to_csv('./app/static/data.csv', index=False)
 
 @app.route('/')
 def index():
