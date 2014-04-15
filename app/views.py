@@ -43,7 +43,12 @@ def refresh_data():
 def index():
     logging.info("RELOAD: {}".format(datetime.now().strftime('%Y/%m/%d/ %H-%M-%S')))
     #filename = refresh_data()
-    refresh_data()
+    try:
+        refresh_data()
+    except:
+        logging.info('\n\nERROR REFRESHING DATA\n')
+        logging.exception('')
+
     filename= './app/static/data.csv'
     df = pd.read_csv(filename)
     logging.info(df)
